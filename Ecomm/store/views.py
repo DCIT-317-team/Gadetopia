@@ -49,10 +49,31 @@ def checkout(request):
     return render(request, 'checkout.html', context)
 
 def settings(request):
-    return render (request, 'settings.html')
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer= customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0, 'shipping':False }
+        cartItems = order['get_cart_items']
+    context={'items':items, 'order':order, 'cartItems':cartItems}
+    return render (request, 'settings.html', context)
 def login(request):
     return render (request,'index.html')
-
+def About(request):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer= customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0, 'shipping':False }
+        cartItems = order['get_cart_items']
+    context={'items':items, 'order':order, 'cartItems':cartItems}
+    return render (request,'About.html',context)
 
 def updateItem(request):
     data = json.loads(request.body)

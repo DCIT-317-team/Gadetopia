@@ -7,7 +7,8 @@ urlpatterns = [
     path('settings/', views.settings, name='settings'),
     path('login/',views.login, name='login'),
     path('update_item/',views.updateItem, name='update_item'),
-    path('process_order/',views.processOrder, name='process_order')
+    path('process_order/',views.processOrder, name='process_order'),
+    path('About/',views.About, name='About')
     
     
     
